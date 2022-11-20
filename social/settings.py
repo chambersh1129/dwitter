@@ -33,12 +33,12 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", default=get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: list = []
 
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS: list = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
