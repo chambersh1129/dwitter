@@ -5,6 +5,7 @@ from django.urls import reverse
 
 class GenericViewTests(TestCase):
     def test_DashboardView(self):
+        print(self.settings)
         url = reverse("dwitter:dashboard")
         response = self.client.get(url)
 
@@ -18,8 +19,7 @@ class ProfileViewTests(TestCase):
 
     def test_ProfileListView_unauthenticated(self):
         url = reverse("dwitter:profile_list")
-        print(url)
-        response = self.client.get(url, follow=True)
+        response = self.client.get(url)
 
         # verify we get a 200 OK but that the username is not listed
         self.assertEqual(response.status_code, 200)
