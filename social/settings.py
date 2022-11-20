@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import environ
 from django.core.management.utils import get_random_secret_key
 from django.utils.crypto import get_random_string
@@ -27,6 +29,6 @@ SECURE_BROWSER_XSS_FILTER: bool = env.bool("DJANGO_SECURE_BROWSER_XSS_FILTER", d
 SECURE_HSTS_INCLUDE_SUBDOMAINS: bool = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
 SECURE_HSTS_PRELOAD: bool = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
 SECURE_HSTS_SECONDS: int = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
-SECURE_PROXY_SSL_HEADER: str = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_PROXY_SSL_HEADER: Tuple[str, str] = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT: bool = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 SESSION_COOKIE_SECURE: bool = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
