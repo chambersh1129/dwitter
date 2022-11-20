@@ -1,4 +1,5 @@
 -r requirements.txt
+bandit[toml]
 black
 coverage
 django-stubs[compatible-mypy]
@@ -8,3 +9,4 @@ ipython
 isort
 mypy
 pre-commit
+safety
