@@ -2,7 +2,7 @@
 bandit[toml]
 black
 coverage
-django-stubs[compatible-mypy]
+django-stubs
 flake8
 flake8-pyproject
 ipython
