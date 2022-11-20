@@ -4,7 +4,7 @@ from django.test import TestCase
 from dwitter.models import Profile
 
 
-class ProfileTests(TestCase):
+class ProfileModelTests(TestCase):
     def test_profile_creation(self):
         # verify there are currently no users or profiles in case fixtures are introduced in the future
         self.assertEqual(User.objects.count(), 0)

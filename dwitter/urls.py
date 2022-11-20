@@ -2,12 +2,12 @@
 
 from django.urls import path
 
-from .views import Dashboard, ProfileDetail, ProfileList
+from .views import DashboardView, ProfileDetailView, ProfileListView
 
 app_name = "dwitter"
 
 urlpatterns = [
-    path("", Dashboard.as_view(), name="dashboard"),
-    path("profile_list/", ProfileList.as_view(), name="profile_list"),
-    path("profile/<str:username>", ProfileDetail.as_view(), name="profile"),
+    path("", DashboardView.as_view(), name="dashboard"),
+    path("profile/<str:username>", ProfileDetailView.as_view(), name="profile"),
+    path("profile_list/", ProfileListView.as_view(), name="profile_list"),
 ]

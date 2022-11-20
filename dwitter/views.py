@@ -7,18 +7,21 @@ from .models import Profile
 
 
 # Create your views here.
-class Dashboard(TemplateView):
+class DashboardView(TemplateView):
     template_name: str = "base.html"
 
 
-class ProfileDetail(DetailView):
+class ProfileDetailView(DetailView):
     model: Type[Model] = Profile
     slug_field: str = "user__username"
     slug_url_kwarg: str = "username"
 
 
-class ProfileList(ListView):
+class ProfileListView(ListView):
     model: Optional[Type[Model]] = Profile
 
     def get_queryset(self) -> QuerySet[Profile]:
-        return super().get_queryset().exclude(user=self.request.user)  # type: ignore
+        if self.request.user.is_authenticated:
+            return super().get_queryset().exclude(user=self.request.user)  # type: ignore
+
+        return super().get_queryset()  # type: ignore
