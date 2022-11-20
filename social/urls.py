@@ -22,4 +22,5 @@ from django.urls import re_path
 urlpatterns = [
     re_path(f"{settings.ADMIN_URL_PREPEND}/admin/", admin.site.urls),
     re_path(r"^health/?", include("health_check.urls")),
+    re_path(r"", include("dwitter.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
