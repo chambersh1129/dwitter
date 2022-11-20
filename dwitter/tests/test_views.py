@@ -18,7 +18,8 @@ class ProfileViewTests(TestCase):
 
     def test_ProfileListView_unauthenticated(self):
         url = reverse("dwitter:profile_list")
-        response = self.client.get(url)
+        print(url)
+        response = self.client.get(url, follow=True)
 
         # verify we get a 200 OK but that the username is not listed
         self.assertEqual(response.status_code, 200)
