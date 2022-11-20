@@ -1,3 +1,6 @@
+[tool.bandit]
+exclude_dirs = ["venv"]
+
 [tool.black]
 line_length = 120
 
