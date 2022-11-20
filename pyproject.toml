@@ -1,0 +1,17 @@
+[tool.black]
+line_length = 120
+
+[tool.flake8]
+max_line_length = 120
+extend_exclude = 'venv'
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+ignore_missing_imports = true
+
+[tool.django-stubs]
+django_settings_module = "social.settings"

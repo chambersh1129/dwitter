@@ -8,12 +8,6 @@ repos:
         types: [json]
       - id: requirements-txt-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.10.1
-    hooks:
-      - id: isort
-        args: [-l 120, --profile, black]
-        types: [python]
   - repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
@@ -25,7 +19,15 @@ repos:
     hooks:
       - id: flake8
         args: [--max-line-length=120]
+        types: [python]
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.10.1
+    hooks:
+      - id: isort
+        args: [-l 120, --profile, black]
+        types: [python]
   - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
     rev: v1.3.0
     hooks:
       - id: python-safety-dependencies-check
+        files: requirements.txt

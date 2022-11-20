@@ -1,6 +1,10 @@
 -r requirements.txt
 black
 coverage
+django-stubs[compatible-mypy]
 flake8
+flake8-pyproject
 ipython
+isort
+mypy
 pre-commit
