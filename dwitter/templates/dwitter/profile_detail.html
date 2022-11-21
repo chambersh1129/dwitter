@@ -11,7 +11,20 @@
             {{profile.user.username|upper}}'s Dweets
         </h1>
     </div>
-
+    {% if profile.user != user %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="buttons has-addons">
+            {% if profile in user.profile.follows.all %}
+            <button class="button is-success is-static">Follow</button>
+            <button class="button is-danger" name="follow" value="unfollow">Unfollow</button>
+            {% else %}
+            <button class="button is-success" name="follow" value="follow">Follow</button>
+            <button class="button is-danger is-static">Unfollow</button>
+            {% endif %}
+        </div>
+    </form>
+    {% endif %}
 </div>
 
 <div class="column is-one-third">
@@ -31,11 +44,13 @@
         <div class="content">
             <ul>
                 {% for following in profile.follows.all %}
+                {% if following != profile %}
                 <li>
                     <a href="{% url 'dwitter:profile' following.user.username %}">
                         {{ following }}
                     </a>
                 </li>
+                {% endif %}
                 {% endfor %}
             </ul>
         </div>
@@ -48,11 +63,13 @@
         <div class="content">
             <ul>
                 {% for follower in profile.followed_by.all %}
+                {% if follower != profile %}
                 <li>
                     <a href="{% url 'dwitter:profile' follower.user.username %}">
                         {{ follower }}
                     </a>
                 </li>
+                {% endif %}
                 {% endfor %}
             </ul>
         </div>
