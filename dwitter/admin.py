@@ -4,9 +4,10 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db.models import Model
 
-from .models import Profile
+from .models import Dweet, Profile
 
 admin.site.unregister(User)
+admin.site.register(Dweet)
 
 
 class ProfileInLine(admin.StackedInline):
