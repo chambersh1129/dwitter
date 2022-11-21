@@ -1,5 +1,8 @@
+from typing import Type
+
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.db.models import Model
 
 from .models import Profile
 
@@ -7,10 +10,10 @@ admin.site.unregister(User)
 
 
 class ProfileInLine(admin.StackedInline):
-    model = Profile
+    model: Type[Model] = Profile
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    fields = ["username"]
-    inlines = [ProfileInLine]
+    fields: list = ["username"]
+    inlines: list = [ProfileInLine]

@@ -31,7 +31,7 @@ INSTALLED_APPS: list = [
     "dwitter",
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE: list = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -41,9 +41,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "social.urls"
+ROOT_URLCONF: str = "social.urls"
 
-TEMPLATES = [
+TEMPLATES: list[dict] = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
@@ -59,13 +59,13 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "social.wsgi.application"
+WSGI_APPLICATION: str = "social.wsgi.application"
 
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS: list[dict] = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
@@ -84,25 +84,25 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE: str = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE: str = "UTC"
 
-USE_I18N = True
+USE_I18N: bool = True
 
-USE_L10N = True
+USE_L10N: bool = True
 
-USE_TZ = True
+USE_TZ: bool = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = str(BASE_DIR.joinpath("static"))
+STATIC_URL: str = "/static/"
+STATIC_ROOT: str = str(BASE_DIR.joinpath("static"))
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DEFAULT_AUTO_FIELD: str = "django.db.models.BigAutoField"

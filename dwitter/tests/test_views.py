@@ -5,7 +5,6 @@ from django.urls import reverse
 
 class GenericViewTests(TestCase):
     def test_DashboardView(self):
-        print(self.settings)
         url = reverse("dwitter:dashboard")
         response = self.client.get(url)
 
