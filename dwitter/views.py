@@ -1,14 +1,21 @@
 from typing import Optional, Type
 
 from django.db.models import Model, QuerySet
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView
 
-from .models import Profile
+from .models import Dweet, Profile
 
 
-# Create your views here.
-class DashboardView(TemplateView):
-    template_name: str = "base.html"
+class DashboardView(ListView):
+    model: Optional[Type[Model]] = Dweet
+    template_name: str = "dwitter/dashboard.html"
+
+    def get_queryset(self) -> QuerySet[Dweet]:
+        if self.request.user.is_authenticated:
+            follows: list = list(self.request.user.profile.follows.values_list("user", flat=True))
+            return Dweet.objects.filter(user__in=follows)  # type: ignore
+
+        return super().get_queryset()  # type: ignore
 
 
 class ProfileDetailView(DetailView):
