@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+# TODO when deleting a User we get a Foreign Key constraint if they have any Dweets
+# figure out a work around, whether it is a soft delete of the user or simply setting the on_delete to CASCADE
 class Dweet(models.Model):
     user = models.ForeignKey("auth.user", related_name="dweets", on_delete=models.DO_NOTHING)
     body = models.CharField(max_length=140)
