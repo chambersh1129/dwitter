@@ -2,14 +2,38 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
+from dwitter.models import Dweet
+
 
 class GenericViewTests(TestCase):
+    def setUp(self):
+        self.test_username = "test_username"
+        self.test_dweet = "this is a test dweet"
+
     def test_DashboardView(self):
         url = reverse("dwitter:dashboard")
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("Dwitter", response.content.decode("utf-8"))
+
+    def test_DashboardView_dweets(self):
+        url = reverse("dwitter:dashboard")
+        response = self.client.get(url)
+
+        # verify we get a 200 OK but that the username is not listed
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn(self.test_username, response.content.decode("utf-8"))
+        self.assertNotIn(self.test_dweet, response.content.decode("utf-8"))
+
+        user = User.objects.create(username=self.test_username)
+        Dweet.objects.create(user=user, body=self.test_dweet)
+
+        response = self.client.get(url)
+        # should still get a 200 OK and now have the user listed
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(self.test_username, response.content.decode("utf-8"))
+        self.assertIn(self.test_dweet, response.content.decode("utf-8"))
 
 
 class ProfileViewTests(TestCase):
