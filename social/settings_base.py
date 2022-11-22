@@ -11,13 +11,14 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from typing import Any, Dict, List
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS: list = []
+ALLOWED_HOSTS: List = []
 
 
-INSTALLED_APPS: list = [
+INSTALLED_APPS: List = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -31,7 +32,7 @@ INSTALLED_APPS: list = [
     "dwitter",
 ]
 
-MIDDLEWARE: list = [
+MIDDLEWARE: List = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -43,7 +44,7 @@ MIDDLEWARE: list = [
 
 ROOT_URLCONF: str = "social.urls"
 
-TEMPLATES: list[dict] = [
+TEMPLATES: List[Dict[str, Any]] = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
@@ -65,7 +66,7 @@ WSGI_APPLICATION: str = "social.wsgi.application"
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS: list[dict] = [
+AUTH_PASSWORD_VALIDATORS: List[Dict] = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
