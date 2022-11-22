@@ -29,8 +29,11 @@
     <div class="content">
         {% for dweet in profile.user.dweets.all %}
         <div class="box">
-            {{ dweet.body }}
-            <span class="is-small has-text-grey-light">({{ dweet.created_at }})</span>
+            <p class="title is-4">{{ dweet.body }}</p>
+            <span class="is-small has-text-grey-light">
+                {{ dweet.created_at }} by
+                <a href="{% url 'dwitter:profile' dweet.user.username %}">@{{ dweet.user.username }}</a>
+            </span>
         </div>
         {% endfor %}
     </div>
