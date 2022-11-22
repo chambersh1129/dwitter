@@ -4,9 +4,18 @@ exclude_dirs = ["venv"]
 [tool.black]
 line_length = 120
 
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+skip_covered = true
+
+[tool.coverage.run]
+branch = true
+source = ["."]
+
 [tool.flake8]
 max_line_length = 120
-extend_exclude = 'venv'
+extend_exclude = "venv"
 
 [tool.isort]
 profile = "black"
