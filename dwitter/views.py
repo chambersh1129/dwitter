@@ -12,7 +12,9 @@ class DashboardView(ListView):
 
     def get_queryset(self) -> QuerySet[Dweet]:
         if self.request.user.is_authenticated:
-            follows: list = list(self.request.user.profile.follows.values_list("user", flat=True))
+            follows: list = list(
+                self.request.user.profile.follows.exclude(user=self.request.user).values_list("user", flat=True)
+            )
             return Dweet.objects.filter(user__in=follows)  # type: ignore
 
         return super().get_queryset()  # type: ignore
