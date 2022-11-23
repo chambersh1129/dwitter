@@ -30,13 +30,13 @@ jobs:
         bandit -c pyproject.toml -r .
     - name: black
       run: |
-        black .
+        black --check .
     - name: flake8
       run: |
         flake8
     - name: isort
       run: |
-        isort .
+        isort --check .
     - name: mypy
       run: |
         mypy .
