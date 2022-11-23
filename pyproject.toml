@@ -3,6 +3,7 @@ exclude_dirs = ["venv"]
 
 [tool.black]
 line_length = 120
+check = true
 
 [tool.coverage.report]
 fail_under = 100
@@ -21,6 +22,7 @@ extend_exclude = "venv"
 [tool.isort]
 profile = "black"
 line_length = 120
+check = true
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
