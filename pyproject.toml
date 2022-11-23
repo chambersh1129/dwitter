@@ -22,7 +22,6 @@ extend_exclude = "venv"
 [tool.isort]
 profile = "black"
 line_length = 120
-check = true
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
