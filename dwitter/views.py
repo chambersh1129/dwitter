@@ -29,17 +29,20 @@ class ProfileDetailView(DetailView):
     slug_url_kwarg: str = "username"
 
     def post(self, request, *args, **kwargs):
-        # Users should not be able to follow/unfollow themselves so make sure
         self.object = self.get_object()
-        current_user_profile = request.user.profile
 
-        if self.object != current_user_profile:
-            action = request.POST.get("follow")
-            if action == "follow":
-                current_user_profile.follows.add(self.object)
-            elif action == "unfollow":
-                current_user_profile.follows.remove(self.object)
-            current_user_profile.save()
+        # AnonymousUser cannot follow anyone
+        if request.user.is_authenticated:
+            current_user_profile = request.user.profile
+
+            # Users cannot follow/unfollow themselves
+            if self.object != current_user_profile:
+                action = request.POST.get("follow")
+                if action == "follow":
+                    current_user_profile.follows.add(self.object)
+                elif action == "unfollow":
+                    current_user_profile.follows.remove(self.object)
+                current_user_profile.save()
 
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)

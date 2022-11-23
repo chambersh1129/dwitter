@@ -91,7 +91,24 @@ class ProfileDetailViewTests(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
-    def test_ProfileDetailView_follow_unfollow_other_user(self):
+    def test_ProfileDetailView_post_unauthenticated(self):
+        """
+        Anonymous user cannot follow/unfollow a user.  Buttons should not render in HTML template if user is not
+        authenticated but this is an extra precaution
+        """
+        url = reverse("dwitter:profile", args=[self.user_1.username])
+
+        # build the payload to follow
+        data = {"follow": "follow"}
+
+        # should get a 200 OK but no change in follows/followed_by
+        # users automatically follow themselves, so user_1 should only have itself in the follows/followed_by
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(self.user_1.profile.follows.all()), 1)
+        self.assertEqual(len(self.user_1.profile.followed_by.all()), 1)
+
+    def test_ProfileDetailView_post_other_user(self):
         """
         Submitting the form should add/remove the profile to the list of users the requester follows
         """
@@ -134,7 +151,7 @@ class ProfileDetailViewTests(TestCase):
         self.assertNotIn(self.user_1.profile, self.user_2.profile.follows.all())
         self.assertNotIn(self.user_2.profile, self.user_1.profile.followed_by.all())
 
-    def test_ProfileDetailView_follow_unfollow_self(self):
+    def test_ProfileDetailView_post_self(self):
         """
         A User should not be able to follow/unfollow themselves
         """
@@ -162,7 +179,7 @@ class ProfileDetailViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(self.user_1.profile, self.user_1.profile.follows.all())
 
-    def test_ProfileDetailView_follow_unfollow_bad_payload(self):
+    def test_ProfileDetailView_post_bad_payload(self):
         """
         If value for "follow" is anything other than follow/unfollow, nothing should happen
         """
