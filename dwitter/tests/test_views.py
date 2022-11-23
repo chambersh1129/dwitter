@@ -218,7 +218,7 @@ class ProfileListViewTests(TestCase):
         """
         Unauthenticated requests should see all users
         """
-        url = reverse("dwitter:profile_list")
+        url = reverse("dwitter:profile-list")
 
         # Should get a 200 OK and see both users
         response = self.client.get(url)
@@ -230,7 +230,7 @@ class ProfileListViewTests(TestCase):
         """
         Authenticated requests should all users except themselves
         """
-        url = reverse("dwitter:profile_list")
+        url = reverse("dwitter:profile-list")
 
         # log in user_1
         self.client.force_login(self.user_1)

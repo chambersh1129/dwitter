@@ -10,10 +10,15 @@
         <p class="title is-4">{{ dweet.body }}</p>
         <span class="is-small has-text-grey-light">
             {{ dweet.created_at }} by
-            <a href="{% url 'dwitter:profile' dweet.user.username %}">@{{ dweet.user.username }}</a>
+            <a href="{% url 'dwitter:profile-detail' dweet.user.username %}">@{{ dweet.user.username }}</a>
         </span>
     </div>
     {% endfor %}
 </div>
 
+{% if user.is_authenticated %}
+<div class="column is-one-third">
+    {% include "dwitter/dweet_form_snippet.html" %}
+</div>
+{% endif %}
 {% endblock content %}

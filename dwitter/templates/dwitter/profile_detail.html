@@ -12,7 +12,7 @@
         </h1>
 
         {% if profile.user != user and user.is_authenticated %}
-        <form method="post">
+        <form method="post" action="{% url 'dwitter:profile-follow' profile.user.username %}">
             {% csrf_token %}
             <div class="buttons has-addons">
                 {% if profile in user.profile.follows.all %}
@@ -32,7 +32,7 @@
             <p class="title is-4">{{ dweet.body }}</p>
             <span class="is-small has-text-grey-light">
                 {{ dweet.created_at }} by
-                <a href="{% url 'dwitter:profile' dweet.user.username %}">@{{ dweet.user.username }}</a>
+                <a href="{% url 'dwitter:profile-detail' dweet.user.username %}">@{{ dweet.user.username }}</a>
             </span>
         </div>
         {% endfor %}
@@ -41,9 +41,15 @@
 
 <div class="column is-one-third">
 
+    {% if user == profile.user %}
+    <div>
+        {% include "dwitter/dweet_form_snippet.html" %}
+    </div>
+    {% endif %}
+
     <div class="block">
-        <a href="{% url 'dwitter:profile_list' %}">
-            <button class="button is-dark is-outlined is-fullwidth">
+        <a href="{% url 'dwitter:profile-list' %}">
+            <button class="button is-dark is-outlined is-fullwidth my-1">
                 All Profiles
             </button>
         </a>
@@ -58,7 +64,7 @@
                 {% for following in profile.follows.all %}
                 {% if following != profile %}
                 <li>
-                    <a href="{% url 'dwitter:profile' following.user.username %}">
+                    <a href="{% url 'dwitter:profile-detail' following.user.username %}">
                         {{ following }}
                     </a>
                 </li>
@@ -77,7 +83,7 @@
                 {% for follower in profile.followed_by.all %}
                 {% if follower != profile %}
                 <li>
-                    <a href="{% url 'dwitter:profile' follower.user.username %}">
+                    <a href="{% url 'dwitter:profile-detail' follower.user.username %}">
                         {{ follower }}
                     </a>
                 </li>
