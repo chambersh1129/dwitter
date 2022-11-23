@@ -8,6 +8,8 @@ Twitter clone based on realpython.com tutorial
 4. [Build and Submit HTML Forms With Django](https://realpython.com/django-social-forms-4/)
 
 ## Additional Resources
+- [Django User Management](https://realpython.com/django-user-management/)
+- [Django View Authorization](https://realpython.com/django-view-authorization/)
 - [Documenting Python Code](https://realpython.com/documenting-python-code/)
 - [Python Type Checking](https://realpython.com/python-type-checking/)
 - [Testing in Django Part 1](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/)
