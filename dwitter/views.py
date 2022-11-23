@@ -102,9 +102,3 @@ class ProfileListView(ListView):
     # ListView will automagically look for dwitter/templates/dwitter/<model>_list.html for template
     model: Optional[Type[Model]] = Profile
     paginate_by: int = 5
-
-    def get_queryset(self) -> QuerySet[Profile]:
-        if self.request.user.is_authenticated:
-            return super().get_queryset().exclude(user=self.request.user)  # type: ignore
-
-        return super().get_queryset()  # type: ignore
