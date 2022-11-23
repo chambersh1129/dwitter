@@ -1,5 +1,6 @@
 from typing import Any, Dict, Optional, Type
 
+from django.core.paginator import Paginator
 from django.db.models import Model, QuerySet
 from django.forms import BaseForm, BaseModelForm
 from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, HttpResponseRedirect
@@ -26,6 +27,7 @@ class DweetFormMixin:
 class DashboardView(DweetFormMixin, ListView):
     model: Optional[Type[Model]] = Dweet
     template_name: str = "dwitter/dashboard.html"
+    paginate_by: int = 5
 
     def get_queryset(self) -> QuerySet[Dweet]:
         if self.request.user.is_authenticated:
@@ -57,6 +59,18 @@ class ProfileDetailView(DweetFormMixin, DetailView):
     model: Type[Model] = Profile
     slug_field: str = "user__username"
     slug_url_kwarg: str = "username"
+    paginate_by: int = 5
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        # custom pagination for dweets
+        context: Dict[str, Any] = super().get_context_data(**kwargs)
+        self.object = self.get_object()
+        dweets = Dweet.objects.filter(user=self.object.user)
+        paginator = Paginator(dweets, self.paginate_by)
+        page_number = self.request.GET.get("page", 1)
+        context["page_obj"] = paginator.page(page_number)
+        context["paginator"] = paginator
+        return context
 
 
 class ProfileFollowView(SingleObjectMixin, View):
@@ -87,6 +101,7 @@ class ProfileFollowView(SingleObjectMixin, View):
 class ProfileListView(ListView):
     # ListView will automagically look for dwitter/templates/dwitter/<model>_list.html for template
     model: Optional[Type[Model]] = Profile
+    paginate_by: int = 5
 
     def get_queryset(self) -> QuerySet[Profile]:
         if self.request.user.is_authenticated:

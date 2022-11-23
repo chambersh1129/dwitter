@@ -27,7 +27,7 @@
         {% endif %}
     </div>
     <div class="content">
-        {% for dweet in profile.user.dweets.all %}
+        {% for dweet in page_obj.object_list %}
         <div class="box">
             <p class="title is-4">{{ dweet.body }}</p>
             <span class="is-small has-text-grey-light">
@@ -36,6 +36,7 @@
             </span>
         </div>
         {% endfor %}
+        {% include "dwitter/pagination.html" %}
     </div>
 </div>
 

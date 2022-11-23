@@ -14,6 +14,9 @@
         </span>
     </div>
     {% endfor %}
+
+    {% include "dwitter/pagination.html" %}
+
 </div>
 
 {% if user.is_authenticated %}
