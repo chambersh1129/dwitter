@@ -12,6 +12,7 @@ skip_covered = true
 [tool.coverage.run]
 branch = true
 source = ["."]
+omit = ["manage.py", "social/*"]
 
 [tool.flake8]
 max_line_length = 120
