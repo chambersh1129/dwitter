@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import re_path
 
-urlpatterns = [
+urlpatterns: list = [
     re_path(f"{settings.ADMIN_URL_PREPEND}/admin/", admin.site.urls),
     re_path(r"^health/?", include("health_check.urls")),
     re_path(r"", include("dwitter.urls")),

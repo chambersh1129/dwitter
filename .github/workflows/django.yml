@@ -46,4 +46,4 @@ jobs:
     - name: Test Coverage
       run: |
         coverage run manage.py test -v 2 --settings=social.settings_test
-        coverage report --show-missing --skip-covered --fail-under=100
+        coverage report
