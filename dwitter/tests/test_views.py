@@ -46,22 +46,22 @@ class DashboardViewTests(TestCase):
         # log the user in
         self.client.force_login(self.user_1)
 
-        # dashboard should not show any dweets because user_1 does not follow anyone
+        # dashboard should only see their own dweets
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertNotIn(self.user_1.username, response.content.decode("utf-8"))
-        self.assertNotIn(self.user_1_dweet.body, response.content.decode("utf-8"))
+        self.assertIn(self.user_1.username, response.content.decode("utf-8"))
+        self.assertIn(self.user_1_dweet.body, response.content.decode("utf-8"))
         self.assertNotIn(self.user_2.username, response.content.decode("utf-8"))
         self.assertNotIn(self.user_2_dweet.body, response.content.decode("utf-8"))
 
         # have user_1 follow user_2
         self.user_1.profile.follows.add(self.user_2.profile)
 
-        # dashboard should show user_2 dweet but not user_1
+        # dashboard should show user_2 dweets
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertNotIn(self.user_1.username, response.content.decode("utf-8"))
-        self.assertNotIn(self.user_1_dweet.body, response.content.decode("utf-8"))
+        self.assertIn(self.user_1.username, response.content.decode("utf-8"))
+        self.assertIn(self.user_1_dweet.body, response.content.decode("utf-8"))
         self.assertIn(self.user_2.username, response.content.decode("utf-8"))
         self.assertIn(self.user_2_dweet.body, response.content.decode("utf-8"))
 
@@ -77,7 +77,7 @@ class ProfileDetailViewTests(TestCase):
         """
         Profile should show the user and all of their tweets
         """
-        url = reverse("dwitter:profile", args=[self.user_1.username])
+        url = reverse("dwitter:profile-detail", args=[self.user_1.username])
 
         # should get a 200 OK and list the user
         response = self.client.get(url)
@@ -87,7 +87,7 @@ class ProfileDetailViewTests(TestCase):
 
         # try again with a username that does not exist, should get a 404
         # TODO create a catch-all 404 page
-        url = reverse("dwitter:profile", args=["not_a_user"])
+        url = reverse("dwitter:profile-detail", args=["not_a_user"])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
@@ -96,15 +96,15 @@ class ProfileDetailViewTests(TestCase):
         Anonymous user cannot follow/unfollow a user.  Buttons should not render in HTML template if user is not
         authenticated but this is an extra precaution
         """
-        url = reverse("dwitter:profile", args=[self.user_1.username])
+        url = reverse("dwitter:profile-follow", args=[self.user_1.username])
 
         # build the payload to follow
         data = {"follow": "follow"}
 
-        # should get a 200 OK but no change in follows/followed_by
+        # should get 403 Bad Request but no change in follows/followed_by
         # users automatically follow themselves, so user_1 should only have itself in the follows/followed_by
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 403)
         self.assertEqual(len(self.user_1.profile.follows.all()), 1)
         self.assertEqual(len(self.user_1.profile.followed_by.all()), 1)
 
@@ -112,7 +112,7 @@ class ProfileDetailViewTests(TestCase):
         """
         Submitting the form should add/remove the profile to the list of users the requester follows
         """
-        url = reverse("dwitter:profile", args=[self.user_1.username])
+        url = reverse("dwitter:profile-follow", args=[self.user_1.username])
 
         # login user_2 so they can follow user_1
         self.client.force_login(self.user_2)
@@ -124,30 +124,30 @@ class ProfileDetailViewTests(TestCase):
         self.assertNotIn(self.user_1.profile, self.user_2.profile.follows.all())
         self.assertNotIn(self.user_2.profile, self.user_1.profile.followed_by.all())
 
-        # should get a 200 OK and user_2 is now following user_1
+        # should get a redirect and user_2 is now following user_1
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertIn(self.user_1.profile, self.user_2.profile.follows.all())
         self.assertIn(self.user_2.profile, self.user_1.profile.followed_by.all())
 
         # making the exact same call doesn't blow up and user_2 still follows user_1
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertIn(self.user_1.profile, self.user_2.profile.follows.all())
         self.assertIn(self.user_2.profile, self.user_1.profile.followed_by.all())
 
         # build the payload to unfollow
         data = {"follow": "unfollow"}
 
-        # should get a 200 OK and user_2 is no longer following user_1
+        # should get a redirect and user_2 is no longer following user_1
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertNotIn(self.user_1.profile, self.user_2.profile.follows.all())
         self.assertNotIn(self.user_2.profile, self.user_1.profile.followed_by.all())
 
         # making the exact same call doesn't blow up and user_2 still not following user_1
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertNotIn(self.user_1.profile, self.user_2.profile.follows.all())
         self.assertNotIn(self.user_2.profile, self.user_1.profile.followed_by.all())
 
@@ -155,7 +155,7 @@ class ProfileDetailViewTests(TestCase):
         """
         A User should not be able to follow/unfollow themselves
         """
-        url = reverse("dwitter:profile", args=[self.user_1.username])
+        url = reverse("dwitter:profile-follow", args=[self.user_1.username])
 
         # login user_2 so they can follow user_1
         self.client.force_login(self.user_1)
@@ -166,24 +166,24 @@ class ProfileDetailViewTests(TestCase):
         # user_1 should already be following user_1
         self.assertIn(self.user_1.profile, self.user_1.profile.follows.all())
 
-        # should get a 200 OK and no change in follows/followed_by
+        # should get a redirect and no change in follows/followed_by
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertIn(self.user_1.profile, self.user_1.profile.follows.all())
 
         # build the payload to follow
         data = {"follow": "follow"}
 
-        # should get a 200 OK and no change in follows/followed_by
+        # should get a redirect and no change in follows/followed_by
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertIn(self.user_1.profile, self.user_1.profile.follows.all())
 
     def test_ProfileDetailView_post_bad_payload(self):
         """
         If value for "follow" is anything other than follow/unfollow, nothing should happen
         """
-        url = reverse("dwitter:profile", args=[self.user_1.username])
+        url = reverse("dwitter:profile-follow", args=[self.user_1.username])
 
         # login user_2
         self.client.force_login(self.user_2)
@@ -193,7 +193,7 @@ class ProfileDetailViewTests(TestCase):
 
         # should get a 200 OK and there should be no change in follow/followed_by
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertNotIn(self.user_1.profile, self.user_2.profile.follows.all())
         self.assertNotIn(self.user_2.profile, self.user_1.profile.followed_by.all())
 
@@ -202,7 +202,7 @@ class ProfileDetailViewTests(TestCase):
 
         # should get a 200 OK and there should be no change in follow/followed_by
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertNotIn(self.user_1.profile, self.user_2.profile.follows.all())
         self.assertNotIn(self.user_2.profile, self.user_1.profile.followed_by.all())
 
@@ -228,7 +228,7 @@ class ProfileListViewTests(TestCase):
 
     def test_ProfileListView_authenticated(self):
         """
-        Authenticated requests should all users except themselves
+        Authenticated requests also should all users
         """
         url = reverse("dwitter:profile-list")
 
@@ -238,5 +238,5 @@ class ProfileListViewTests(TestCase):
         # Should get a 200 OK and should see only user_2
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertNotIn(self.user_1.username, response.content.decode("utf-8"))
+        self.assertIn(self.user_1.username, response.content.decode("utf-8"))
         self.assertIn(self.user_2.username, response.content.decode("utf-8"))
