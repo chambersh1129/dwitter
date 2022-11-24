@@ -1,10 +1,12 @@
 from typing import Type
 
 from django.contrib import admin
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models import Model
 
 from .models import Dweet, Profile
+
+User = get_user_model()
 
 admin.site.unregister(User)
 admin.site.register(Dweet)
