@@ -1,0 +1,74 @@
+<div class="block">
+    <a href="{% url 'dwitter:profile-list' %} ">
+        <button class="button is-dark is-outlined is-fullwidth">
+            All Profiles
+        </button>
+    </a>
+</div>
+{% if user.is_authenticated %}
+<div class="block">
+    <a href="{% url 'dwitter:profile-detail' request.user.username %} ">
+        <button class="button is-success is-light is-outlined is-fullwidth">
+            My Profile
+        </button>
+    </a>
+</div>
+<div class="block">
+    <a href="#">
+        <button class="button is-danger is-light is-outlined is-fullwidth">
+            Logout
+        </button>
+    </a>
+</div>
+{% if display_dweet_form %}
+{% include "dwitter/snippets/dweet_form.html" %}
+{% endif %}
+{% else %}
+<div class="block">
+    <a href="#">
+        <button class="button is-info is-light is-outlined is-fullwidth">
+            Login
+        </button>
+    </a>
+</div>
+{% endif %}
+{% if display_follow %}
+<div class="block">
+    <h3 class="title is-4">
+        {{profile.user.username}} follows:
+    </h3>
+    <div class="content">
+        <ul>
+            {% for following in profile.follows.all %}
+            {% if following != profile %}
+            <li>
+                <a href="{% url 'dwitter:profile-detail' following.user.username %}">
+                    {{ following }}
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="block">
+    <h3 class="title is-4">
+        {{profile.user.username}} is followed by:
+    </h3>
+    <div class="content">
+        <ul>
+            {% for follower in profile.followed_by.all %}
+            {% if follower != profile %}
+            <li>
+                <a href="{% url 'dwitter:profile-detail' follower.user.username %}">
+                    {{ follower }}
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endif %}

@@ -1,12 +1,10 @@
-<!-- dwitter/templates/dwitter/dweet_form.html -->
-
 {% extends 'base.html' %}
 
 {% block content %}
 
 <div class="column">
     {% if user.is_authenticated %}
-    {% include "dwitter/dweet_form_snippet.html" %}
+    {% include "dwitter/snippets/dweet_form.html" %}
     {% else %}
     <p class="title is-4">Must be logged in to dweet</p>
     {% endif %}
