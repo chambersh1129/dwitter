@@ -28,10 +28,8 @@ class DweetFormMixin(FormMixin):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context: Dict[str, Any] = super(DweetFormMixin, self).get_context_data(**kwargs)  # type: ignore
-        if "dweet_form" not in context:
-            context["dweet_form"] = DweetForm
-        if "display_dweet_form" not in context:
-            context["display_dweet_form"] = True
+        context["dweet_form"] = DweetForm
+        context["display_dweet_form"] = True
         return context
 
     def get_form_class(self) -> Type[BaseForm]:
@@ -52,7 +50,7 @@ class DweetFormMixin(FormMixin):
                 errors.append(f"{error['message']}")
             messages.error(self.request, "\n".join(errors))
 
-        else:
+        else:  # pragma: no cover
             messages.error(self.request, "Dweet cannot be empty")
 
         return HttpResponseRedirect(self.request.META.get("HTTP_REFERER") or reverse("dwitter:dashboard"))
