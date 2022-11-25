@@ -1,0 +1,34 @@
+<div class="block">
+    <div class="box">
+        {% if messages %}
+        <div class="notification is-danger is-light">
+            <button class="delete"></button>
+            <ul class="messages">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <form method="post" action="{% url 'dwitter:dweet-create' %}">
+            {% csrf_token %}
+            <div class="block">
+                {{ dweet_form.as_p }}
+            </div>
+            <div class="block">
+                <button class="button is-success is-fullwidth" type="submit">Dweet</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+            const $notification = $delete.parentNode;
+
+            $delete.addEventListener('click', () => {
+                $notification.parentNode.removeChild($notification);
+            });
+        });
+    });
+</script>

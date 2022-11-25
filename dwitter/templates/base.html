@@ -1,5 +1,3 @@
-<!-- dwitter/templates/base.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,19 +13,28 @@
 </head>
 
 <body>
-    <section class="hero is-small is-success mb-4">
-        <div class="hero-body">
-            <h1 class="title is-1">
-                <a href="{% url 'dwitter:dashboard' %}">Dwitter</a>
-            </h1>
-            <p class="subtitle is-4">Your tiny social network built with Django</p>
-        </div>
-    </section>
+    <a href="{% url 'dwitter:dashboard' %}">
+        <section class="hero is-small is-success mb-4">
+            <div class="hero-body">
+                <h1 class="title is-1">
+                    Dwitter
+                </h1>
+                <p class="subtitle is-4">Your tiny social network built with Django</p>
+            </div>
+        </section>
+    </a>
     <div class="container">
         <div class="columns">
-            {% block content %}
-            {% endblock content %}
+            <div class="column">
+                {% block content %}
+                {% endblock content %}
+                {% include "dwitter/snippets/pagination.html" %}
+            </div>
+            <div class="column is-one-third">
+                {% include "dwitter/snippets/sidebar.html" %}
+            </div>
         </div>
+
     </div>
 </body>
 

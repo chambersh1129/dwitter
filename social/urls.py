@@ -17,10 +17,10 @@ from django.conf import settings
 from django.conf.urls import include
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import re_path
+from django.urls import path
 
 urlpatterns: list = [
-    re_path(f"{settings.ADMIN_URL_PREPEND}/admin/", admin.site.urls),
-    re_path(r"^health/?", include("health_check.urls")),
-    re_path(r"", include("dwitter.urls")),
+    path("admin/", admin.site.urls),
+    path("health/", include("health_check.urls")),
+    path("", include("dwitter.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
