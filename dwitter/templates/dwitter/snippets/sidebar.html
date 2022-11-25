@@ -1,11 +1,7 @@
-<div class="block">
-    <a href="{% url 'dwitter:profile-list' %} ">
-        <button class="button is-dark is-outlined is-fullwidth">
-            All Profiles
-        </button>
-    </a>
-</div>
 {% if user.is_authenticated %}
+{% if display_dweet_form %}
+{% include "dwitter/snippets/dweet_form.html" %}
+{% endif %}
 <div class="block">
     <a href="{% url 'dwitter:profile-detail' request.user.username %} ">
         <button class="button is-success is-light is-outlined is-fullwidth">
@@ -20,9 +16,6 @@
         </button>
     </a>
 </div>
-{% if display_dweet_form %}
-{% include "dwitter/snippets/dweet_form.html" %}
-{% endif %}
 {% else %}
 <div class="block">
     <a href="#">
@@ -32,6 +25,13 @@
     </a>
 </div>
 {% endif %}
+<div class="block">
+    <a href="{% url 'dwitter:profile-list' %} ">
+        <button class="button is-dark is-outlined is-fullwidth">
+            All Profiles
+        </button>
+    </a>
+</div>
 {% if display_follow %}
 <div class="block">
     <h3 class="title is-4">

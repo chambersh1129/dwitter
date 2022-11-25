@@ -1,5 +1,7 @@
+import json
 from typing import Any, Dict, Optional, Type
 
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Model, QuerySet
 from django.forms import BaseForm, BaseModelForm
@@ -35,11 +37,25 @@ class DweetFormMixin(FormMixin):
     def get_form_class(self) -> Type[BaseForm]:
         return DweetForm
 
-    def get_success_url(self):
+    def get_success_url(self) -> str:
         """
-        Redirect the user to the page they submitted from
+        Redirect the user to the page they submitted from for fallback to the dashboard
         """
-        return self.request.META.get("HTTP_REFERER")
+        return self.request.META.get("HTTP_REFERER") or reverse("dwitter:dashboard")
+
+    def form_invalid(self, form: BaseModelForm):
+        """If the form is invalid, render the invalid form."""
+        error_dict = json.loads(form.errors.as_json())
+        if "body" in error_dict:
+            errors = []
+            for error in error_dict["body"]:
+                errors.append(f"{error['message']}")
+            messages.error(self.request, "\n".join(errors))
+
+        else:
+            messages.error(self.request, "Dweet cannot be empty")
+
+        return HttpResponseRedirect(self.request.META.get("HTTP_REFERER") or reverse("dwitter:dashboard"))
 
 
 class DashboardView(DweetFormMixin, ListView):
@@ -64,6 +80,10 @@ class DweetCreateView(DweetFormMixin, ProcessFormView):
         Handle POST requests: instantiate a form instance with the passed
         POST variables and then check if it's valid.
         """
+        # AnonymousUser cannot dweet
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+
         form = self.get_form()
         if form.is_valid():
             return self.form_valid(form)
@@ -90,8 +110,6 @@ class ProfileDetailView(DweetFormMixin, DetailView):
         context["page_obj"] = paginator.page(page_number)
         context["paginator"] = paginator
         context["display_follow"] = True
-        if self.request.user.is_authenticated and self.request.user.profile != self.object:
-            context["display_dweet_form"] = False
         return context
 
 
@@ -99,6 +117,10 @@ class ProfileFollowView(SingleObjectMixin, View):
     model: Type[Model] = Profile
     slug_field: str = "user__username"
     slug_url_kwarg: str = "username"
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponseRedirect:
+        self.object = self.get_object()
+        return HttpResponseRedirect(reverse("dwitter:profile-detail", kwargs={"username": self.object.user.username}))
 
     def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponseRedirect:
         # AnonymousUser cannot follow anyone
