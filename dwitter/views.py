@@ -1,11 +1,11 @@
 import json
-from typing import Any, Dict, Optional, Type
+from typing import Any, Dict, Optional, Type, Union
 
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Model, QuerySet
 from django.forms import BaseForm, BaseModelForm
-from django.http import HttpRequest, HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import DetailView, ListView
@@ -21,7 +21,9 @@ class DweetFormMixin(FormMixin):
     Any view that renders templates can add this mixin to add the DweetForm to the context
     """
 
-    def form_valid(self, form: BaseModelForm) -> HttpResponseRedirect:
+    request: HttpRequest
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
         form.instance.user = self.request.user
         form.save()
         return super().form_valid(form)
@@ -70,10 +72,10 @@ class DashboardView(DweetFormMixin, ListView):
 
 
 class DweetCreateView(DweetFormMixin, ProcessFormView):
-    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponseRedirect:
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return HttpResponseRedirect(reverse("dwitter:dashboard"))
 
-    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponseRedirect:
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         """
         Handle POST requests: instantiate a form instance with the passed
         POST variables and then check if it's valid.
@@ -120,7 +122,7 @@ class ProfileFollowView(SingleObjectMixin, View):
         self.object = self.get_object()
         return HttpResponseRedirect(reverse("dwitter:profile-detail", kwargs={"username": self.object.user.username}))
 
-    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponseRedirect:
+    def post(self, request: HttpRequest, *args, **kwargs) -> Union[HttpResponseForbidden, HttpResponseRedirect]:
         # AnonymousUser cannot follow anyone
         if not request.user.is_authenticated:
             return HttpResponseForbidden()
