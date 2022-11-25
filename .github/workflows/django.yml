@@ -31,9 +31,9 @@ jobs:
     - name: black
       run: |
         black --check .
-    - name: flake8
-      run: |
-        flake8
+    # - name: flake8
+    #   run: |
+    #     flake8
     - name: isort
       run: |
         isort --check .
