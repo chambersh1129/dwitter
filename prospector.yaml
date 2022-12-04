@@ -6,8 +6,9 @@ inherits:
   - strictness_high
 
 ignore-patterns:
-  - __init__.py
+  - .*__init__.py
   - .*migrations.*
+  - .*settings.*.py
 
 uses:
   - django
@@ -17,10 +18,12 @@ pydocstyle:
     - D203
     - D213
     - D407
+    - D413
 
 pylint:
   disable:
     - import-outside-toplevel
+    - too-many-ancestors
     - wrong-import-order  # covered by isort
     - wrong-import-position  # covered by isort
   options:
