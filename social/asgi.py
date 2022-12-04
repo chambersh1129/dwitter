@@ -1,5 +1,4 @@
-"""
-ASGI config for social project.
+"""ASGI config for social project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
