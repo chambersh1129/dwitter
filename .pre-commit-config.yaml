@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v4.4.0
     hooks:
       - id: end-of-file-fixer
       - id: pretty-format-json
@@ -8,22 +8,11 @@ repos:
         types: [json]
       - id: requirements-txt-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.4
-    hooks:
-      - id: bandit
-        types: [python]
   - repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
       - id: black
         args: [-l 120]
-        types: [python]
-  - repo: https://github.com/PyCQA/flake8
-    rev: 5.0.4
-    hooks:
-      - id: flake8
-        args: [--max-line-length=120]
         types: [python]
   - repo: https://github.com/pre-commit/mirrors-isort
     rev: v5.10.1
@@ -31,6 +20,14 @@ repos:
       - id: isort
         args: [-l 120, --profile, black]
         types: [python]
+  - repo: https://github.com/PyCQA/prospector
+    rev: v1.8.2
+    hooks:
+      - id: prospector
+        additional_dependencies:
+          - ".[with_mypy,with_bandit]"
+        args:
+          - --profile prospector.yaml
   - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
     rev: v1.3.0
     hooks:
