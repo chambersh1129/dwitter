@@ -1,12 +1,3 @@
 -r requirements.txt
-bandit[toml]
-black
-coverage[toml]
-django-stubs[compatible-mypy]
-flake8
-flake8-pyproject
 ipython
-isort
-mypy
 pre-commit
-safety
