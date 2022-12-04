@@ -1,5 +1,8 @@
-# dwitter/urls.py
+"""Urls for the "dwitter" application.
 
+For more information on this file, see
+https://docs.djangoproject.com/en/3.2/topics/http/urls/
+"""
 from django.urls import path
 
 from .views import DashboardView, DweetCreateView, ProfileDetailView, ProfileFollowView, ProfileListView
