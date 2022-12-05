@@ -6,7 +6,6 @@ inherits:
   - strictness_high
 
 ignore-patterns:
-  - .*__init__.py
   - .*migrations.*
   - .*settings.*.py
 
@@ -15,6 +14,7 @@ uses:
 
 pydocstyle:
   disable:
+    - D104
     - D203
     - D213
     - D407

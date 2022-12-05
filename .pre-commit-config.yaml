@@ -20,14 +20,6 @@ repos:
       - id: isort
         args: [-l 120, --profile, black]
         types: [python]
-  - repo: https://github.com/PyCQA/prospector
-    rev: v1.8.2
-    hooks:
-      - id: prospector
-        additional_dependencies:
-          - ".[with_mypy,with_bandit]"
-        args:
-          - --profile prospector.yaml
   - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
     rev: v1.3.0
     hooks:

@@ -21,7 +21,7 @@ Twitter clone based on realpython.com tutorial.  The idea is to take a simple tu
 - [Testing in Django Part 2](https://realpython.com/testing-in-django-part-2-model-mommy-vs-django-testing-fixtures/)
 
 ## Custom Enhancements in this Repo vs Tutorial
-- Enforced Python coding best practices with GitHub Workflow/pre-commit:
+- Enforced Python coding best practices via protected main branch and a GitHub Workflow:
   - 100% Branching Code Coverage
   - [bandit](https://github.com/PyCQA/bandit) security scan
   - [black](https://github.com/psf/black) formatter
@@ -29,7 +29,7 @@ Twitter clone based on realpython.com tutorial.  The idea is to take a simple tu
   - [mypy](https://github.com/python/mypy) static typing analysis
   - [prospector](https://github.com/PyCQA/prospector) linting/scanning
   - [safety](https://github.com/pyupio/safety/) dependency vulnerability scanner
-  - [tox] for multi-python environment testing
+  - [tox](https://github.com/tox-dev/tox) for multi-python environment testing
 - Class based views vs Functional views
 - Per-environment settings via environmental variables/.env file with common-sense, secure defaults
 - Quality of Life improvements to the UI
