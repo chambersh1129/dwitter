@@ -1,5 +1,5 @@
 # dwitter
-[![build](https://github.com/chambersh1129/dwitter/actions/workflows/django.yml/badge.svg?branch=main)](https://github.com/chambersh1129/dwitter/actions/workflows/django.yml)
+[![build](https://github.com/chambersh1129/dwitter/actions/workflows/django.yml/badge.svg?branch=main)](https://github.com/chambersh1129/dwitter/actions/workflows/django.yml?query=branch%3Amain)
 [![Codecov branch](https://img.shields.io/codecov/c/github/chambersh1129/dwitter/main)](https://app.codecov.io/gh/chambersh1129/dwitter)
 ![Supported Python Versions](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)
 ![Supported Django Versions](https://img.shields.io/badge/django-3.2%20LTS-blue)
