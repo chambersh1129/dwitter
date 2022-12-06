@@ -102,7 +102,7 @@ class DweetCreateViewTests(TestCase):
 
         pre_dweet_count = Dweet.objects.count()
 
-        # should get 403 Bad Request but no change in follows/followed_by
+        # should get 403 Bad Request but no change in the # of dweets
         # Dweet should not be created, count should be the same
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 403)
@@ -297,7 +297,7 @@ class ProfileFollowViewTests(TestCase):
         """
         url = reverse("dwitter:profile-follow", args=[self.user_1.username])
 
-        # login user_2 so they can follow user_1
+        # login user_1 to attempt to follow themselves
         self.client.force_login(self.user_1)
 
         # build the payload to follow
@@ -311,8 +311,8 @@ class ProfileFollowViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertIn(self.user_1.profile, self.user_1.profile.follows.all())
 
-        # build the payload to follow
-        data = {"follow": "follow"}
+        # build the payload to unfollow
+        data = {"follow": "unfollow"}
 
         # should get a redirect and no change in follows/followed_by
         response = self.client.post(url, data=data)
