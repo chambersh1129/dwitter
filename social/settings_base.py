@@ -24,7 +24,13 @@ INSTALLED_APPS: List = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     # 3rd part apps
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.google",
     "health_check",
     "health_check.db",
     # custom
@@ -81,6 +87,27 @@ AUTH_PASSWORD_VALIDATORS: List[Dict] = [
 ]
 
 
+# django-allauth settings
+# https://django-allauth.readthedocs.io/en/latest/overview.html
+
+AUTHENTICATION_BACKENDS: List[str] = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = 1
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    "github": {"SCOPE": ["read:user"]},
+    "google": {
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+        "OAUTH_PKCE_ENABLED": True,
+    },
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -106,3 +133,8 @@ STATIC_ROOT: str = str(BASE_DIR.joinpath("static"))
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD: str = "django.db.models.BigAutoField"
+
+# Authentication/Authorization
+
+LOGIN_REDIRECT_URL = "dwitter:dashboard"
+LOGOUT_REDIRECT_URL = "dwitter:dashboard"
