@@ -1,0 +1,4 @@
+bandit
+mypy
+prospector[with_mypy,with_bandit]
+safety

@@ -1,0 +1,7 @@
+-r requirements.txt
+-r requirements-format.txt
+-r requirements-lint.txt
+-r requirements-test.txt
+pre-commit
+tox
+tox-gh-actions

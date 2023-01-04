@@ -1,13 +1,12 @@
-# run with 'prospector --profile prospector.yaml'
 max-line-length: 120
 doc-warnings: true
 
 inherits:
   - strictness_high
 
-ignore-patterns:
-  - .*migrations.*
-  - .*settings.*.py
+ignore-paths:
+  - venv
+  - docs
 
 uses:
   - django
@@ -32,8 +31,6 @@ pylint:
 
 mypy:
   run: true
-  options:
-    ignore-missing-imports: true
 
 bandit:
   run: true
