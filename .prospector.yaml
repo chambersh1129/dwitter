@@ -8,6 +8,10 @@ ignore-paths:
   - venv
   - docs
 
+ignore-patterns:
+  - .*migrations.*
+  - .*settings.*.py
+
 uses:
   - django
 
@@ -31,6 +35,8 @@ pylint:
 
 mypy:
   run: true
+  options:
+    ignore-missing-imports: true
 
 bandit:
   run: true
