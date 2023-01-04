@@ -1,6 +1,6 @@
 # dwitter
 [![build](https://github.com/chambersh1129/dwitter/actions/workflows/django.yml/badge.svg?branch=main)](https://github.com/chambersh1129/dwitter/actions/workflows/django.yml?query=branch%3Amain)
-[![Codecov branch](https://img.shields.io/codecov/c/github/chambersh1129/dwitter/main)](https://app.codecov.io/gh/chambersh1129/dwitter)
+[![codecov](https://codecov.io/gh/chambersh1129/dwitter/main/graph/badge.svg)](https://codecov.io/gh/chambersh1129/dwitter)
 ![Supported Python Versions](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)
 ![Supported Django Versions](https://img.shields.io/badge/django-3.2%20LTS-blue)
 
@@ -32,18 +32,13 @@ Twitter clone based on realpython.com tutorial.  The idea is to take a simple tu
   - [tox](https://github.com/tox-dev/tox) for multi-python environment testing
 - Class based views vs Functional views
 - Per-environment settings via environmental variables/.env file with common-sense, secure defaults
-- Quality of Life improvements to the UI
-  - Dweet form is now displayed in the sidepane of every page if logged in
-  - Pagination implemented for dweets/profiles
-  - Enhanced feedback when submitting bad Dweet
+- Pagination implemented for dweets/profiles
+- Expanded Authentication/Authorization
+  - Create profile with email or Google/GitHub OAuth
+  - Log In/Log Out/Register pages
 - Other small changes here or there I have forgotten
 
 ## Planned Enhancements
-- Expanded Authentication/Authorization, including
-  - New User onboarding
-  - Login/Logout
-  - Password recovery
-  - Disable/Delete profile
 - Dweet/User search
 - Documentation using either MkDocs or Sphinx
 - Rest API
