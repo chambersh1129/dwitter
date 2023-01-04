@@ -9,25 +9,62 @@
     <!-- Include the Bulma CSS framework for styling -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
+    <!-- Include Font Awesome for some icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
     <title>Dwitter</title>
 </head>
 
 <body>
-    <a href="{% url 'dwitter:dashboard' %}">
-        <section class="hero is-small is-success mb-4">
+
+    <section class="hero is-small is-success mb-4">
+        <a href="{% url 'dwitter:dashboard' %}">
             <div class="hero-body">
                 <h1 class="title is-1">
                     Dwitter
                 </h1>
                 <p class="subtitle is-4">Your tiny social network built with Django</p>
             </div>
-        </section>
-    </a>
+        </a>
+        <div class="hero-foot">
+            <div class="container">
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                        <nav class="navbar" role="navigation" aria-label="dropdown navigation">
+                            <div class="navbar-item has-dropdown is-hoverable has-text-dark">
+                                <a class="navbar-link">
+                                    <i class="fa-solid fa-circle-user"> {{ user.username }}</i>
+                                </a>
+                                <div class="navbar-dropdown">
+                                    {% if user.is_authenticated %}
+                                    <a class="navbar-item"
+                                        href="{% url 'dwitter:profile-detail' request.user.username %}">
+                                        Profile
+                                    </a>
+                                    <a class="navbar-item">
+                                        Settings
+                                    </a>
+                                    <hr class="navbar-divider">
+                                    <a class="navbar-item" href="{% url 'account_logout' %}">Logout</a>
+                                    {% else %}
+                                    <a class="navbar-item" href="{% url 'account_login' %}">Log in</a>
+                                    <a class="navbar-item" href="{% url 'account_signup' %}">
+                                        Sign up
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                </nav>
+            </div>
+        </div>
+    </section>
     <div class="container">
         <div class="columns">
             <div class="column">
-                {% block content %}
-                {% endblock content %}
+                {% block content %} {% endblock content %}
                 {% include "dwitter/snippets/pagination.html" %}
             </div>
             <div class="column is-one-third">

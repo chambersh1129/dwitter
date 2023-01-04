@@ -52,7 +52,10 @@ ROOT_URLCONF: str = "social.urls"
 TEMPLATES: List[Dict[str, Any]] = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            str(BASE_DIR.joinpath("templates")),
+            str(BASE_DIR.joinpath("templates", "allauth")),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -97,8 +100,7 @@ AUTHENTICATION_BACKENDS: List[str] = [
 
 SITE_ID = 1
 
-
-SOCIALACCOUNT_PROVIDERS = {
+SOCIALACCOUNT_PROVIDERS: Dict[str, Any] = {
     "github": {"SCOPE": ["read:user"]},
     "google": {
         "SCOPE": ["profile", "email"],
@@ -106,7 +108,6 @@ SOCIALACCOUNT_PROVIDERS = {
         "OAUTH_PKCE_ENABLED": True,
     },
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
