@@ -22,6 +22,7 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns: list = [
+    path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
     path("health/", include("health_check.urls")),
     path("", include("dwitter.urls")),

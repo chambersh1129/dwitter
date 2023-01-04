@@ -96,7 +96,7 @@ class DweetFormMixin(FormMixin):
                 errors.append(f"{error['message']}")
             messages.error(self.request, "\n".join(errors))
 
-        else:  # pragma: no cover
+        else:
             messages.error(self.request, "Dweet cannot be empty")
 
         return HttpResponseRedirect(self.get_success_url())

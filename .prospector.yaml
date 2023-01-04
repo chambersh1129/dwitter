@@ -1,9 +1,12 @@
-# run with 'prospector --profile prospector.yaml'
 max-line-length: 120
 doc-warnings: true
 
 inherits:
   - strictness_high
+
+ignore-paths:
+  - venv
+  - docs
 
 ignore-patterns:
   - .*migrations.*

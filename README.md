@@ -22,7 +22,7 @@ Twitter clone based on realpython.com tutorial.  The idea is to take a simple tu
 
 ## Custom Enhancements in this Repo vs Tutorial
 - Enforced Python coding best practices via protected main branch and a GitHub Workflow:
-  - 100% Branching Code Coverage
+  - Tests and branching code coverage
   - [bandit](https://github.com/PyCQA/bandit) security scan
   - [black](https://github.com/psf/black) formatter
   - [isort](https://github.com/PyCQA/isort) formatter
