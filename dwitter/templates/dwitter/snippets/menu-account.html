@@ -1,0 +1,85 @@
+<div class="block">
+    <aside class="menu">
+        <h1 class="title is-1 has-text-info">
+            Dwitter
+        </h1>
+        <hr>
+        <p class="menu-label has-text-info is-2">
+            Account
+        </p>
+        <ul class="menu-list">
+            {% if user.is_authenticated %}
+            <li>
+                <a class="has-text-info" href="#">
+                    <i class="fa-solid fa-user"></i>
+                    My Profile
+                </a>
+            </li>
+            <li>
+                <a class="has-text-info" href="{% url 'account_logout' %}">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+            <li>
+                <a class="has-text-info account-modal-trigger" data-target="account-modal" href="#">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <a class="has-text-info" href="{% url 'account_login' %}">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Log In
+                </a>
+            </li>
+            <li>
+                <a class="has-text-info" href="{% url 'account_signup' %}">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    Sign Up
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+        <p class="menu-label has-text-info">
+            Explore
+        </p>
+        <ul class="menu-list">
+            <li>
+                <a class="has-text-info" href="{% url 'dwitter:home' %}">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a class="has-text-info" href="#">
+                    <i class="fa-solid fa-comment"></i>
+                    All Dweets
+                </a>
+            </li>
+            <li>
+                <a class="has-text-info" href="#">
+                    <i class="fa-solid fa-users"></i>
+                    All Profiles
+                </a>
+            </li>
+        </ul>
+    </aside>
+</div>
+<div id="account-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Log In</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <!-- Content ... -->
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button">Cancel</button>
+        </footer>
+    </div>
+</div>

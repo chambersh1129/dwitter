@@ -1,0 +1,39 @@
+{% for dweet in object_list %}
+<div class="box mx-2 has-background-grey-light">
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>{{ dweet.user.username }}</strong> <small>@{{ dweet.user.username }}</small>
+                    <small>{{ dweet.created_at|date }}</small>
+                    <br>
+                    {{ dweet.body }}
+                </p>
+            </div>
+            <nav class="level is-mobile">
+                <div class="level-left">
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                    </a>
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                    </a>
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </article>
+</div>
+<div class="box mx-2 has-background-grey-light">
+    <p class="title is-4">{{ dweet.body }}</p>
+    <span class="is-small">
+        {{ dweet.created_at }} by <a href="#">@{{ dweet.user.username }}</a>
+    </span>
+</div>
+{% endfor %}
+{% if page_obj.has_next %}
+<div hx-get="{% url 'dwitter:dweet-list' %}?page={{ page_obj.next_page_number }}" hx-trigger="revealed"
+    hx-swap="outerHTML"></div>
+{% endif %}

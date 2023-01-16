@@ -137,5 +137,5 @@ DEFAULT_AUTO_FIELD: str = "django.db.models.BigAutoField"
 
 # Authentication/Authorization
 
-LOGIN_REDIRECT_URL = "dwitter:dashboard"
-LOGOUT_REDIRECT_URL = "dwitter:dashboard"
+LOGIN_REDIRECT_URL: str = "dwitter:home"
+LOGOUT_REDIRECT_URL: str = "dwitter:home"

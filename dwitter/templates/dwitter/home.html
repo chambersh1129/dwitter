@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="columns">
+    <div class="column">
+        <div class="sticky">
+            {% include "dwitter/snippets/searchbar.html" %}
+            {% include "dwitter/snippets/dweetform.html" %}
+        </div>
+    </div>
+    <div class="column is-half">
+        <div class="box has-background-grey-dark">
+            <h1 class="title is-4 has-text-info">
+                <i class="fa-solid fa-house-chimney"> Home</i>
+            </h1>
+            <hr>
+            <div id="dweet-list" hx-get="{% url 'dwitter:dweet-list' %}" hx-trigger="load" hx-swap="beforeend">
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="sticky">
+            {% include "dwitter/snippets/menu-account.html" %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
